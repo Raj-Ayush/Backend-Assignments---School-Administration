@@ -62,14 +62,14 @@ app.put("/api/student/:id",(req, res) => {
         (student) => student.id === Number(idToSearch)
     );
     if(matchedIdx === -1){
-        req.sendStatus(400);
+        res.sendStatus(400);
     }
     else if(
         isNullorUndefined(name)&&
         isNullorUndefined(currentClass)&&
         isNullorUndefined(division)
     ){
-        req.sendStatus(400);
+        res.sendStatus(400);
     }
     else{
         if(!isNullorUndefined(name)){
