@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // your code goes here
-
+let maxId = localstudentArr.length;
 app.get("/api/student",(req, res) => {
         res.send(localstudentArr);
 });
@@ -30,7 +30,6 @@ app.get("/api/student/:id",(req, res) => {
 });
 
 const isNullorUndefined = (value) => value === null || value === undefined; 
-let maxId = localstudentArr.length;
 app.post("/api/student", (req, res) => {
     const newStuDetails = req.body;
     //console.log(newStuDetails);
@@ -49,6 +48,7 @@ app.post("/api/student", (req, res) => {
         const newId = maxId + 1;
         maxId = newId;
         newStuDetails.id = newId;
+        newStuDetails.currentClass = Number(currentClass);
         localstudentArr.push(newStuDetails);
         res.send({ id : newId}); 
     }
@@ -73,11 +73,10 @@ app.put("/api/student/:id",(req, res) => {
     }
     else{
         if(!isNullorUndefined(name)){
-            localstudentArr[matchedIdx].name = name;
-            
+            localstudentArr[matchedIdx].name = name;    
         } 
         if(!isNullorUndefined(currentClass)){
-            localstudentArr[matchedIdx].currentClass = currentClass;
+            localstudentArr[matchedIdx].currentClass = Number(currentClass);
             
         }if(!isNullorUndefined(division)){
             localstudentArr[matchedIdx].division = division;
