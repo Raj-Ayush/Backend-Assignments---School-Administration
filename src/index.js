@@ -22,7 +22,7 @@ app.get("/api/student/:id",(req, res) => {
         student.id === Number(idToSearch)
     );
     if(matched.length === 0){
-        res.send(404);
+        res.sendStatus(404);
     }
     else{
         res.send(matched[0]);
@@ -34,7 +34,7 @@ let maxId = localstudentArr.length;
 app.post("/api/student", (req, res) => {
     const newStuDetails = req.body;
     //console.log(newStuDetails);
-    console.log(localstudentArr);
+    //console.log(localstudentArr);
     const { name, currentClass, division } = newStuDetails;
     // console.log(name);
     // console.log(currentClass);
@@ -43,7 +43,7 @@ app.post("/api/student", (req, res) => {
         isNullorUndefined(currentClass)||
         isNullorUndefined(division))
     {
-        res.send(400);
+        res.sendStatus(400);
     }
     else{
         const newId = maxId + 1;
@@ -62,14 +62,14 @@ app.put("/api/student/:id",(req, res) => {
         (student) => student.id === Number(idToSearch)
     );
     if(matchedIdx === -1){
-        req.send(400);
+        req.sendStatus(400);
     }
     else if(
         isNullorUndefined(name)&&
         isNullorUndefined(currentClass)&&
         isNullorUndefined(division)
     ){
-        req.send(400);
+        req.sendStatus(400);
     }
     else{
         if(!isNullorUndefined(name)){
@@ -79,9 +79,8 @@ app.put("/api/student/:id",(req, res) => {
         if(!isNullorUndefined(currentClass)){
             localstudentArr[matchedIdx].currentClass = currentClass;
             
-        } if(!isNullorUndefined(division)){
+        }if(!isNullorUndefined(division)){
             localstudentArr[matchedIdx].division = division;
-            
         } 
         res.send(200);
     }
